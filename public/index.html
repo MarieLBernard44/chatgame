@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Chat Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+<h1>💬 Chat Game</h1>
+<ul id="messages"></ul>
+
+<div id="users">
+    <h2>Connectés</h2>
+    <ul></ul>
+</div>
+
+<form id="msgform">
+    <input type="text" name="message" placeholder="Message...">
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Connexion au serveur Socket.io
+        // avec la même adresse (host + port) que la  page courante
+        var socket = io();
+
+        // Log lorsqu'on est bien connecté
+        socket.on('connect', function() {
+            console.log('Connecté !');
+        });
+
+        // Réception d'un nouveau message
+        // et ajout dans la liste
+        socket.on('msg', function(msg) {
+            var messages = document.getElementById('messages');
+            var li = document.createElement('li');
+            li.innerText = 'Le ' + msg.date + ' Par: ' + msg.userId + ' ' + msg.txt;
+            messages.appendChild(li);
+        });
+
+        // Réception de la nouvelle liste des connectés
+        // de type [{id, nickname}, ...]
+        var usersUl = document.querySelector('#users ul');
+        socket.on('users', function(users) {
+            usersUl.innerHTML = users.map(u => '<li>' + u.nickname + '</li>').join('');
+        });
+
+        // Envoi d'un nouveau message
+        var msgform = document.getElementById('msgform');
+        msgform.addEventListener('submit', function(e) {
+            e.preventDefault();
+            socket.emit('msg', this.message.value);
+            this.message.value = '';
+        });
+
+        // Autofocus sur le champ de texte
+        msgform.message.focus();
+    </script>
+
+</body>
+</html>

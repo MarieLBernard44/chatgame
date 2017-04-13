@@ -1,0 +1,50 @@
+body {
+    background-color: #DAF0ED;
+    color: #50556e;
+    font-size: 16px;
+}
+
+#msgform {
+    position: absolute;
+    height: 50px;
+    margin: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+#msgform input {
+    width: 100%;
+    height: 50px;
+    line-height: 40px;
+    border: 3px solid #50556e;
+    background-color: white;
+    font-size: 20px;
+    padding-left: 5px;
+}
+#msgform input:focus {
+    outline: none;
+    border-color: #939ed1;
+}
+
+#messages li{
+    list-style-type: none;
+}
+
+#users {
+    position: absolute;
+    width: 300px;
+    top: 15px;
+    right: 0;
+}
+#users h2 {
+    font-size: 20px;
+    font-family: 'Indie Flower', cursive;
+}
+
+h1{
+    font-family: 'Indie Flower', cursive;
+    font-size: 50px;
+}
+#users ul {
+    padding-left: 15px;
+}
