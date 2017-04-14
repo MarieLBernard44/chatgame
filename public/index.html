@@ -49,7 +49,25 @@
 
             // Scroll en bas de la liste
             messages.scrollTop = messages.scrollHeight - messages.clientHeight;
+
+            // Affichage de la bulle à côté du user
+            var bubble = document.querySelector('#user-' + message.userId + ' .bubble');
+            if (bubble) {
+                // Annulation du setTimeout précédent s'il y en a un
+                clearTimeout(bubble.getAttribute('data-timeout'));
+
+                // Affichage de la bulle avec le texte du message
+                bubble.style.display = 'block';
+                bubble.innerText = message.txt;
+
+                // Délai avant de cacher la bulle à nouveau
+                var timeout = setTimeout(function() {
+                    bubble.style.display = 'none';
+                }, 2000);
+                bubble.setAttribute('data-timeout', timeout);
+            }
         });
+
 
         // Réception de la nouvelle liste des connectés
         // de type [{id, nickname}, ...]
@@ -75,14 +93,34 @@
                     oldIds.splice(oldIdIndex, 1);
                 }
                 var userDiv = document.getElementById('user-' + user.id);
+                var nickDiv;
                 // Si le <div> du user n'existe pas encore, on le crée
                 if (!userDiv) {
+                    // Div à positionner
                     userDiv = document.createElement('div');
                     userDiv.id = 'user-' + user.id;
                     userDiv.className = 'user';
+
+                    // Nickname
+                    nickDiv = document.createElement('span');
+                    userDiv.appendChild(nickDiv);
+
+                    // Bulle de texte
+                    var bubble = document.createElement('p');
+                    bubble.className = 'bubble';
+                    bubble.style.display = 'none'; // cachée au début
+                    userDiv.appendChild(bubble);
+
+                    // Affichage du <div>
                     document.body.appendChild(userDiv);
+                } else {
+                    nickDiv = userDiv.getElementsByTagName('span')[0];
                 }
-                userDiv.innerText = user.nickname;
+
+                // Mise à jour du nickname
+                nickDiv.innerText = user.nickname;
+
+                // Mise à jour de la position
                 userDiv.style.left = user.position.x + '%';
                 userDiv.style.top = user.position.y + '%';
             }
@@ -116,6 +154,17 @@
 
         // Autofocus sur le champ de texte
         msgform.message.focus();
+
+        document.body.addEventListener('click', function(e){
+            if (e.target.tagName === 'INPUT') return;
+            const position = {
+                x: e.clientX / window.innerWidth * 100,
+                y: e.clientY / window.innerHeight * 100
+            };
+
+            socket.emit('move', position);
+        });
+
     </script>
 
 </body>

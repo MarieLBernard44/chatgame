@@ -2,6 +2,13 @@ body {
     background-color: #DAF0ED;
     color: #50556e;
     font-size: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    text-align: center;
 }
 
 #msgform {
@@ -26,8 +33,13 @@ body {
     border-color: #939ed1;
 }
 
-#messages li{
+li{
     list-style-type: none;
+}
+
+#messages{
+    margin: 50px;
+    font-size: 30px;
 }
 
 #users {
@@ -44,6 +56,7 @@ body {
 h1{
     font-family: 'Indie Flower', cursive;
     font-size: 50px;
+
 }
 #users ul {
     padding-left: 15px;
@@ -68,4 +81,35 @@ h1{
     margin-left: -50px;
     margin-top: -12px;
     transition: top 1s ease-out, left 1s ease-out;
+}
+
+.bubble {
+    position: relative;
+    top: 25px;
+    background: white;
+    border: 4px solid #c2e1f5;
+    font-size: 20px;
+}
+.bubble:after, .arrow_box:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.bubble:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: #88b7d5;
+    border-width: 10px;
+    margin-left: -10px;
+}
+.bubble:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: #c2e1f5;
+    border-width: 16px;
+    margin-left: -16px;
 }

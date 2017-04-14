@@ -69,6 +69,12 @@ io.on('connection', (socket) => {
             io.emit('users', users);
         });
 
+        socket.on('move', (position) => {
+            console.log(user.position);
+            user.position = position;
+            io.emit('users', users);
+        });
     });
+
 
 });
