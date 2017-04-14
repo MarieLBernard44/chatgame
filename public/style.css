@@ -48,3 +48,24 @@ h1{
 #users ul {
     padding-left: 15px;
 }
+
+
+#messages {
+    position: absolute;
+    width: 100%;
+    top: 70px;
+    bottom: 45px;
+    overflow: auto;
+}
+
+.user {
+    position: absolute;
+    text-align: center;
+    font-size: 34px;
+    width: 100px;
+    height: 34px;
+    line-height: 34px;
+    margin-left: -50px;
+    margin-top: -12px;
+    transition: top 1s ease-out, left 1s ease-out;
+}
